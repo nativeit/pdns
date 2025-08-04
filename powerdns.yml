@@ -3,6 +3,8 @@
 include:
   - .env
   - dockerdata/pdns.conf
+  - dockerdata/dnsdist.conf
+  - dockerdata/recursor.conf
 services:
   recursor:
       image: nativeit/powerdns-recursor:${REVISION:-latest}
@@ -34,3 +36,12 @@ services:
       - "1053:53"
       - "1053:53/udp"
       - "8081:8081"
+
+  dnscontrol:
+    image: nativeit/dnscontrol:
+    environment:
+    ports:
+      - "8080:8080"
+    volumes:
+      - $(pwd)/dnsconfig.js:/dns/dnsconfig.js
+      - $(pwd)/creds.json:/dns/creds.json
