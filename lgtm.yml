@@ -1,5 +1,6 @@
 path_classifiers:
-  test: "regression-tests*"
+  test:
+    - "regression-tests*"
   library:
   - "ext"
   - exclude: ext/luawrapper
