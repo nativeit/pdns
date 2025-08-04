@@ -1,23 +1,20 @@
 ---
 #version: '2.0'
 include:
+  - .env
   - dockerdata/pdns.conf
 services:
   recursor:
-    build:
-      context: .
-      dockerfile: Dockerfile-recursor
-    environment:
-      - PDNS_RECURSOR_API_KEY=${api-key}
-    ports:
-      - "2053:53"
-      - "2053:53/udp"
-      - "8082:8082"
+      image: nativeit/powerdns-recursor:${REVISION:-latest}
+      environment:
+        - PDNS_RECURSOR_API_KEY=${api-key}
+      ports:
+        - "2053:53"
+        - "2053:53/udp"
+        - "8082:8082"
 
   dnsdist:
-    build:
-      context: .
-      dockerfile: Dockerfile-dnsdist
+    image: nativeit/powerdns-dnsdist:${REVISION:-latest}
     environment:
       - DNSDIST_API_KEY=${api-key}
     links:
@@ -30,9 +27,7 @@ services:
       - "8083:8083"
 
   auth:
-    build:
-      context: .
-      dockerfile: Dockerfile-auth
+    image: nativeit/powerdns-auth:${REVISION:-latest}
     environment:
       - PDNS_AUTH_API_KEY=${api-key}
     ports:
