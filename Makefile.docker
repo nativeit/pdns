@@ -1,26 +1,26 @@
 .PHONY: all build build-nocache dep auth recursor dnsdist
 
 VERSION=experimental
-REVISION=1.1
+REVISION=v1.0.1
 
 all: build
 
 auth:
-	docker buildx --build-arg VERSION=$(VERSION) -t nativeit/pdns-auth-master:$(VERSION)-$(REVISION) --rm -f Dockerfile-auth .
+	docker buildx build --build-arg VERSION=$(VERSION) -t nativeit/pdns-auth-master:$(VERSION)-$(REVISION) --rm -f Dockerfile-auth .
 
 recursor:
-	docker buildx --build-arg VERSION=$(VERSION) -t nativeit/pdns-recursor-master:$(VERSION)-$(REVISION) --rm -f Dockerfile-recursor .
+	docker buildx build --build-arg VERSION=$(VERSION) -t nativeit/pdns-recursor-master:$(VERSION)-$(REVISION) --rm -f Dockerfile-recursor .
 
 dnsdist:
-	docker buildx --build-arg VERSION=$(VERSION) -t nativeit/dnsdist-master:$(VERSION)-$(REVISION) --rm -f Dockerfile-dnsdist .
+	docker buildx build --build-arg VERSION=$(VERSION) -t nativeit/dnsdist-master:$(VERSION)-$(REVISION) --rm -f Dockerfile-dnsdist .
 
 build: auth recursor dnsdist
 	@true
 
 build-nocache:
-	docker buildx --build-arg VERSION=$(VERSION) -t nativeit/pdns-auth-master:$(VERSION)-$(REVISION) --no-cache --rm -f Dockerfile-auth .
-	docker buildx --build-arg VERSION=$(VERSION) -t nativeit/pdns-recursor-master:$(VERSION)-$(REVISION) --no-cache --rm -f Dockerfile-recursor .
-	docker buildx --build-arg VERSION=$(VERSION) -t nativeit/dnsdist-master:$(VERSION)-$(REVISION) --no-cache --rm -f Dockerfile-dnsdist .
+	docker buildx build --build-arg VERSION=$(VERSION) -t nativeit/pdns-auth-master:$(VERSION)-$(REVISION) --no-cache --rm -f Dockerfile-auth .
+	docker buildx build --build-arg VERSION=$(VERSION) -t nativeit/pdns-recursor-master:$(VERSION)-$(REVISION) --no-cache --rm -f Dockerfile-recursor .
+	docker buildx build --build-arg VERSION=$(VERSION) -t nativeit/dnsdist-master:$(VERSION)-$(REVISION) --no-cache --rm -f Dockerfile-dnsdist .
 
 push: build
 	docker push nativeit/pdns-auth-master:$(VERSION)-$(REVISION)
