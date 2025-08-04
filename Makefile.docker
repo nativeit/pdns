@@ -6,13 +6,13 @@ REVISION=v1.0.2
 all: build
 
 auth:
-	docker buildx build --build-arg VERSION=$(VERSION) -t nativeit/pdns-auth-master:$(VERSION)-$(REVISION) --rm -f Dockerfile-auth .
+	docker buildx build --build-arg VERSION=$(VERSION) -t nativeit/pdns-auth:$(VERSION)-$(REVISION) --rm -f Dockerfile-auth .
 
 recursor:
-	docker buildx build --build-arg VERSION=$(VERSION) -t nativeit/pdns-recursor-master:$(VERSION)-$(REVISION) --rm -f Dockerfile-recursor .
+	docker buildx build --build-arg VERSION=$(VERSION) -t nativeit/pdns-recursor:$(VERSION)-$(REVISION) --rm -f Dockerfile-recursor .
 
 dnsdist:
-	docker buildx build --build-arg VERSION=$(VERSION) -t nativeit/dnsdist-master:$(VERSION)-$(REVISION) --rm -f Dockerfile-dnsdist .
+	docker buildx build --build-arg VERSION=$(VERSION) -t nativeit/dnsdist:$(VERSION)-$(REVISION) --rm -f Dockerfile-dnsdist .
 
 dnscontrol:
 	docker buildx build --build-arg VERSION=${VERSION} -t nativeit/dnscontrol:$(VERSION)-$(REVISION) --rm -f dnscontrol/Dockerfile .
@@ -21,24 +21,24 @@ build: auth recursor dnsdist dnscontrol
 	@true
 
 build-nocache:
-	docker buildx build --build-arg VERSION=$(VERSION) -t nativeit/pdns-auth-master:$(VERSION)-$(REVISION) --no-cache --rm -f Dockerfile-auth .
-	docker buildx build --build-arg VERSION=$(VERSION) -t nativeit/pdns-recursor-master:$(VERSION)-$(REVISION) --no-cache --rm -f Dockerfile-recursor .
-	docker buildx build --build-arg VERSION=$(VERSION) -t nativeit/dnsdist-master:$(VERSION)-$(REVISION) --no-cache --rm -f Dockerfile-dnsdist .
+	docker buildx build --build-arg VERSION=$(VERSION) -t nativeit/pdns-auth:$(VERSION)-$(REVISION) --no-cache --rm -f Dockerfile-auth .
+	docker buildx build --build-arg VERSION=$(VERSION) -t nativeit/pdns-recursor:$(VERSION)-$(REVISION) --no-cache --rm -f Dockerfile-recursor .
+	docker buildx build --build-arg VERSION=$(VERSION) -t nativeit/dnsdist:$(VERSION)-$(REVISION) --no-cache --rm -f Dockerfile-dnsdist .
 	docker buildx build --build-arg VERSION=${VERSION} -t nativeit/dnscontrol:$(VERSION)-$(REVISION) --no-cache --rm -f dnscontrol/Dockerfile .
 
 push: build
-	docker push nativeit/pdns-auth-master:$(VERSION)-$(REVISION)
-	docker push nativeit/pdns-recursor-master:$(VERSION)-$(REVISION)
-	docker push nativeit/dnsdist-master:$(VERSION)-$(REVISION)
+	docker push nativeit/pdns-auth:$(VERSION)-$(REVISION)
+	docker push nativeit/pdns-recursor:$(VERSION)-$(REVISION)
+	docker push nativeit/dnsdist:$(VERSION)-$(REVISION)
 	docker push nativeit/dnscontrol:$(VERSION)-$(REVISION)
 
 push-latest: build
-	docker tag nativeit/pdns-auth-master:$(VERSION)-$(REVISION) nativeit/pdns-auth-master:latest
-	docker push nativeit/pdns-auth-master:latest
-	docker tag nativeit/pdns-recursor-master:$(VERSION)-$(REVISION) nativeit/pdns-recursor-master:latest
-	docker push nativeit/pdns-recursor-master:latest
-	docker tag nativeit/dnsdist-master:$(VERSION)-$(REVISION) nativeit/dnsdist-master:latest
-	docker push nativeit/dnsdist-master:latest
+	docker tag nativeit/pdns-auth:$(VERSION)-$(REVISION) nativeit/pdns-auth:latest
+	docker push nativeit/pdns-auth:latest
+	docker tag nativeit/pdns-recursor:$(VERSION)-$(REVISION) nativeit/pdns-recursor:latest
+	docker push nativeit/pdns-recursor:latest
+	docker tag nativeit/dnsdist:$(VERSION)-$(REVISION) nativeit/dnsdist:latest
+	docker push nativeit/dnsdist:latest
 	docker tag nativeit/dnscontrol:$(VERSION)-$(REVISION) nativeit/dnscontrol:latest
 	docker push nativeit/dnscontrol:latest
 

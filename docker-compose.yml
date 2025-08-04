@@ -10,7 +10,7 @@ services:
         - "8082:8082"
 
   dnsdist:
-    image: nativeit/pdns-dnsdist:${REVISION:-latest}
+    image: nativeit/dnsdist:${REVISION:-latest}
     environment:
       - DNSDIST_API_KEY=${api-key}
     links:
