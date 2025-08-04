@@ -1,7 +1,7 @@
 .PHONY: all build build-nocache dep auth recursor dnsdist
 
 VERSION=experimental
-REVISION=v1.0.1
+REVISION=v1.0.2
 
 all: build
 
